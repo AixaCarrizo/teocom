@@ -1,0 +1,62 @@
+#include <DHT.h>
+#include <DHT_U.h>
+
+#include <LoRa.h>
+/*metodos: int16_t transmit(uint8_t* data, size_t len)para transmitir un paquete de señal
+            var1= datos a transmitir, arreglo de bytes que va hasta 256 bytes
+            var 2=dimension del arreglo
+
+            int16_t transmit(const char* str) para transmision de strings
+            val significa string(de C) de 256 caracteres maximo
+
+            int16_t transmit(String& str)transmitir un string
+            datos para ser transmitido en la forma de un string de arduino
+
+            int16_t sleep() se duerme literal
+            int16_t standby() se activa cuando lo llamas
+            int16_t setBandwidth(float bw) setea el ancho de banda
+            int16_t setOutputPower(int8_t power) setea la potencia durante la transmision, puede ir de 2 a 17 Dbm
+            valiable es la potencia a setear en Dbm
+
+           int16_t setCurrentLimit(uint8_t currentLimit) setear manualmente la corriente de proteccion a transmitir, de 45 a 120 mA con paso de 5 mA, de 120 a 240 con paso de 10 mA
+          variable es la corriente limite
+            
+*/              
+const int ledverde=5;
+const int ledrojo=6;
+const int  sensor = A0;
+long temperatura;
+long milivoltios;
+int brillo;
+#define DHTPIN 2
+#define DHTTYPE DHT11
+DHT dht(DHTPIN, DHTTYPE);
+
+void setup() {
+  Serial.begin(9600);
+   pinMode(ledrojo, OUTPUT);
+   pinMode(ledverde, OUTPUT);
+   dht.begin();
+   
+}
+
+void loop() {
+
+ /* milivoltios = (analogRead(sensor)*5000L)/1023;
+  temperatura = milivoltios/10;
+  brillo= map(temperatura, 10, 40, 0, 255);
+  brillo=constrain(brillo, 0, 255);
+  analogWrite(ledrojo, brillo);
+  analogWrite(ledverde,255-brillo);
+  Serial.print("Temperatura: ");
+  Serial.print(temperatura);
+  Serial.println("°C");
+*/
+
+delay(10000);
+float t =dht.readTemperature();
+Serial.print(t);
+  Serial.print(" *C ");  
+  Serial.println("");  
+  
+}
